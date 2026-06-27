@@ -7,7 +7,6 @@ install.packages("openxlsx")
 install.packages("janitor")
 install.packages("car")
 
-
 #carregar
 
 library(dplyr)
