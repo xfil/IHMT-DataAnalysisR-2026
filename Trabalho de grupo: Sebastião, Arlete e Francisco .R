@@ -1,5 +1,3 @@
-
-  
 #instalar
 install.packages("dplyr")
 install.packages("ggplot2")
@@ -8,7 +6,6 @@ install.packages("janitor")
 install.packages("car")
 
 #carregar
-
 library(dplyr)
 library(ggplot2)
 library(openxlsx)
@@ -155,19 +152,6 @@ hist_response_gg_empilhado <- ggplot(df_clean, aes(x = weight_g, fill = cuvier_r
   )
 hist_response_gg_empilhado
 
-
-# criar 2 histogramas para cada resposta com ggplot
-hist_response_gg <- ggplot(df_clean, aes(x = weight_g)) +
-  geom_histogram(binwidth = 1, fill = "steelblue", color = "black", na.rm = TRUE) +
-  facet_wrap(~ cuvier_response) +
-  labs(
-    x = "Weight (g)",
-    y = "Frequência",
-    title = "Distribuição do peso por resposta Cuvier"
-  )
-hist_response_gg
-
-
 #Histograma por cuvier_present
 hist_presence_gg_empilhado <- df_clean %>%
   filter(!is.na(cuvier_present)) %>%
@@ -180,22 +164,6 @@ hist_presence_gg_empilhado <- df_clean %>%
     fill = "Presença Cuvier"
   )
 hist_presence_gg_empilhado
-
-
-#Histograma por cuvier_present separado
-hist_presence_gg <- df_clean %>%
-  filter(!is.na(cuvier_present)) %>%
-  ggplot(aes(x = weight_g)) +
-  geom_histogram(binwidth = 1, fill = "steelblue", color = "black", na.rm = TRUE) +
-  facet_wrap(~ cuvier_present) +
-  labs(
-    x = "Weight (g)",
-    y = "Frequência",
-    title = "Distribuição do peso por presença anatómica de Cuvier"
-  )
-hist_presence_gg
-
-
 
 #QQ Plot para cuvier_response. Aqui não usei o dplyr com o pipe por oção estética e para fazer o exercício. Faz mais sentido usar %>% quando quero fazer alguma operação antes do gráfico
 qqplot_response <- ggplot(df_clean, aes(sample = weight_g)) +
@@ -254,20 +222,6 @@ shapiro_presence
 #Boxplot
 
 # Boxplot do peso por presença anatómica de Cuvier
-
-box_presence_gg <- df_clean %>%
-  filter(!is.na(cuvier_present)) %>%
-  ggplot(aes(x = cuvier_present, y = weight_g, fill = cuvier_present)) +
-  geom_boxplot(na.rm = TRUE) +
-  labs(
-    x = "Presença anatómica de Cuvier",
-    y = "Weight (g)",
-    title = "Peso por presença anatómica de Cuvier",
-    fill = "Presença Cuvier"
-  )
-box_presence_gg
-
-
 #Com dados individuais - argumento jitter, onde o argumento alpha dá a transparência dos pontos, sendo 1 totalmente opacos e 0 totalmente transparentes.
 box_presence_jitter_gg <- df_clean %>%
   filter(!is.na(cuvier_present)) %>%
@@ -285,17 +239,6 @@ box_presence_jitter_gg
 
 
 # Boxplot do peso por resposta de Cuvier
-box_response_gg <- df_clean %>%
-  ggplot(aes(x = cuvier_response, y = weight_g, fill = cuvier_response)) +
-  geom_boxplot(na.rm = TRUE, alpha = 0.7) +
-  labs(
-    x = "Resposta de Cuvier",
-    y = "Weight (g)",
-    title = "Peso por resposta de Cuvier",
-    fill = "Resposta Cuvier"
-  )
-box_response_gg
-
 #Com dados individuais - argumento jitter
 box_response_jitter_gg <- df_clean %>%
   ggplot(aes(x = cuvier_response, y = weight_g, fill = cuvier_response)) +
@@ -352,7 +295,6 @@ teste_w_presence <- wilcox.test(
     filter(!is.na(cuvier_present))
 )
 teste_w_presence
-
 
 
 #criando novo data frame em que filtramos os NA, removendo.
